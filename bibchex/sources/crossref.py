@@ -6,7 +6,7 @@ from functools import partial
 
 import crossref_commons.retrieval
 import crossref_commons.search
-from fuzzywuzzy import fuzz
+from rapidfuzz import fuzz
 from ratelimit import RateLimitException
 
 from bibchex.data import Suggestion
@@ -94,9 +94,9 @@ class CrossrefSource(object):
                 suggested_title = results[i]['title']
                 doi = results[i]['DOI']
 
-                fuzz_score = fuzz.partial_ratio(title, suggested_title)
-                if fuzz_score >= self._cfg.get('doi_fuzzy_threshold', entry,
-                                               90):
+                score_cutoff = self._cfg.get('doi_fuzzy_threshold', entry, 90)
+                if fuzz.partial_ratio(title, suggested_title,
+                                      score_cutoff=score_cutoff):
                     return doi
 
             return None

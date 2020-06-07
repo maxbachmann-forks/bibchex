@@ -14,7 +14,7 @@ setup(
     install_requires=["aiohttp>=3.6.2",
                       "bibtexparser>=1.1.0",
                       "crossref-commons-reverse>=0.0.7.1",
-                      "fuzzywuzzy==0.18.0",
+                      "rapidfuzz==0.9.1",
                       "isbnlib>=3.10.3",
                       "Jinja2>=2.11.1",
                       "nameparser>=1.0.6",

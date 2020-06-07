@@ -1,7 +1,7 @@
 from bibchex.config import Config
 from bibchex.strutil import AbbrevFinder
 from itertools import combinations
-from fuzzywuzzy import fuzz
+from rapidfuzz import fuzz
 
 
 class GenericFuzzySimilarityChecker(object):
@@ -34,7 +34,7 @@ class GenericFuzzySimilarityChecker(object):
         problems = []
         for (n1, n2) in combinations(
                 GenericFuzzySimilarityChecker.SEEN_NAMES[name], 2):
-            if fuzz.partial_ratio(n1, n2) > 95:  # TODO make configurable
+            if fuzz.partial_ratio(n1, n2, score_cutoff=95):  # TODO make configurable
                 problems.append((name,
                                  "{} names '{}' and '{}' seem very similar."
                                  .format(cls.MSG_NAME, n1, n2),
